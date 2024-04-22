@@ -5,7 +5,7 @@ import { TodoItem } from "../lib/types.js";
 import Button from "./ui/Button.js";
 import Division from "./ui/Division.js";
 import Footer from "./Footer.js";
-import {create} from "../framework/framework.js";
+import { create } from "../framework/framework.js";
 
 type TodoListProps = {
   filter?: string;
@@ -63,30 +63,67 @@ export const TodoList = ({ filter = "all" }: TodoListProps) => {
         return true;
     }
   });
+  const activeCount = todos.filter((todo) => !todo.isComplete).length;
+
+  const activeCountLabel = create(
+    "label",
+    {
+      class: "text-xl font-bold p-2",
+      key: "active-count-label",
+    },
+    `Active tasks: ${activeCount}`
+  );
 
   return Division({
     class: " grid grid-cols-5 ",
-    children: [Division({class:"col-span-3 col-start-2 mt-16 bg-white border shadow-lg",
+    children: [
+      Division({
+        class: "col-span-3 col-start-2 mt-16 bg-white border shadow-lg",
 
-      children: [
-        Division({ variant:"row", class: "p-4 font-sans font-light text-3xl tracking-widest justify-center", children: [create("p", { class: "font-thin text-6xl text-gray-400" , children:[]},"todos")]}),
-        // Division({ class: "p-4 font-sans font-light italic text-sm tracking-wide text-gray-500", children: "Create your to-do-list!" }),
-        Division({ class: "p-4 ", children: TodoForm({ onSubmit: addTodo }) }),
-        Division({
-          class: "p-4 col-span-3 col-start-2 ",
-          children: filteredTodos.map((todo) =>
-              Todo({ todo, completeTodo, removeTodo, updateTodo, removeCompleteTodo })
-          )
-        }),
-        Division({class: "p-4  justify-center",children: Button({class:"rounded-sm w-full",
-            text: "Clear all done tasks",onClick: () => removeCompleteTodo(),})
-        }),
-        Division({ class: "p-4 ", children: Footer()}),
-        // Footer()
-      ]
-    })],
+        children: [
+          Division({
+            variant: "row",
+            class:
+              "p-4 font-sans font-light text-3xl tracking-widest justify-center",
+            children: [
+              create(
+                "p",
+                { class: "font-thin text-6xl text-gray-400", children: [] },
+                "todos"
+              ),
+            ],
+          }),
+          // Division({ class: "p-4 font-sans font-light italic text-sm tracking-wide text-gray-500", children: "Create your to-do-list!" }),
+          Division({
+            class: "p-4 ",
+            children: TodoForm({ onSubmit: addTodo }),
+          }),
+          Division({
+            class: "p-4 col-span-3 col-start-2 ",
+            children: filteredTodos.map((todo) =>
+              Todo({
+                todo,
+                completeTodo,
+                removeTodo,
+                updateTodo,
+                removeCompleteTodo,
+              })
+            ),
+          }),
+          Division({
+            class: "p-4  justify-center",
+            children: Button({
+              class: "rounded-sm w-full",
+              text: "Clear all done tasks",
+              onClick: () => removeCompleteTodo(),
+            }),
+          }),
+          Division({ class: "p-4 ", children: Footer() }),
+          Division({ class: "p-4 ", children: activeCountLabel }),
 
-  },
-
-  );
+          ,
+        ],
+      }),
+    ],
+  });
 };
