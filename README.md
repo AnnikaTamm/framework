@@ -2,6 +2,8 @@
 
 Welcome to TodoMVC! This simple, effective to-do list app allows you to manage your tasks easily. Whether you need to keep track of work assignments, grocery lists, or daily goals, TodoMVC is here to help. Follow the instructions below to get started.
 
+[Link to framework documentation](https://01.kood.tech/git/Lauri_R/mini-framework/src/branch/master/frontend/src/framework/README.md)
+
 ## Launching TodoMVC
 
 1. Navigate to frontend folder `cd frontend`
